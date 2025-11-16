@@ -90,7 +90,15 @@
               <h1 id="hero-name">Rob Hooper</h1>
               <p class="eyebrow">Precision program leadership for AI-ready cloud ecosystems</p>
               <div class="identity__details contact-console__links" aria-label="Primary contact methods">
-                <a class="contact-console__link" href="mailto:rh@robhooper.xyz">📧 Email</a>
+                <a
+                  class="contact-console__link contact-console__link--email"
+                  href="#"
+                  data-email-user="rh"
+                  data-email-domain="robhooper.xyz"
+                  aria-label="Email Rob Hooper"
+                >
+                  📧 <span class="email-text">rh [at] robhooper [dot] xyz</span>
+                </a>
                 <a
                   class="contact-console__link contact-console__link--network"
                   href="https://www.linkedin.com/in/rwh"
@@ -318,6 +326,25 @@
       document.documentElement.classList.remove('no-js');
       const year = new Date().getFullYear();
       document.getElementById('year').textContent = year;
+
+      const emailLinks = document.querySelectorAll('[data-email-user][data-email-domain]');
+
+      emailLinks.forEach((link) => {
+        const { emailUser, emailDomain } = link.dataset;
+        if (!emailUser || !emailDomain) {
+          return;
+        }
+
+        const emailAddress = `${emailUser}@${emailDomain}`;
+        link.href = `mailto:${emailAddress}`;
+
+        const emailText = link.querySelector('.email-text');
+        if (emailText) {
+          emailText.textContent = emailAddress;
+        } else {
+          link.textContent = emailAddress;
+        }
+      });
 
       const nav = document.querySelector('.primary-nav');
       const navToggle = document.querySelector('.primary-nav__toggle');
